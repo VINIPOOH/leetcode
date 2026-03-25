@@ -6,15 +6,15 @@ import java.util.Queue;
 public class NumberOfIslands200 {
 
     public int numIslands(char[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
+        int rows = grid.length;
+        int cols = grid[0].length;
         int islands = 0;
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '1') {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (grid[row][col] == '1') {
                     islands++;
-                    dfs(grid, i, j);
+                    dfs(grid, row, col);
                 }
             }
         }
@@ -121,7 +121,9 @@ public class NumberOfIslands200 {
         }
 
         // Проходим по всем клеткам и объединяем соседние "1"
-        int[][] directions = { { -1, 0 }, { 0, -1 } }; // проверяем только верх и левый
+        int[][] directions = { { -1, 0 }, { 0, -1 } }; // проверяем только вверх и влево
+        //потому что мы новый остров пытаемся прилепить к островам которые уже есть. А обработанное
+        //находиться сверху и с лева.
         for (int rov = 0; rov < rows; rov++) {
             for (int colum = 0; colum < cols; colum++) {
                 if (grid[rov][colum] == '1') {

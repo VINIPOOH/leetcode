@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LongestPalindromicSubstring5 {
 
@@ -16,6 +14,50 @@ public class LongestPalindromicSubstring5 {
         System.out.println(longestPalindromicSubstring5.longestPalindrome("babad"));
     }
 
+    //каноническое решение
+    public String longestPalindrome1(String s) {
+        if (s == null || s.length() < 2) {
+            return s;
+        }
+
+        int startOfBest = 0;
+        int maxLength = 1;
+
+        for (int center = 0; center < s.length(); center++) {
+
+            // 1) Проверяем палиндром нечётной длины (центр = один символ)
+            int oddLength = expandAroundCenter(s, center, center);
+            if (oddLength > maxLength) {
+                maxLength = oddLength;
+                startOfBest = center - (oddLength - 1) / 2;
+            }
+
+            // 2) Проверяем палиндром чётной длины (центр между символами)
+            int evenLength = expandAroundCenter(s, center, center + 1);
+            if (evenLength > maxLength) {
+                maxLength = evenLength;
+                startOfBest = center - (evenLength / 2) + 1;
+            }
+        }
+
+        return s.substring(startOfBest, startOfBest + maxLength);
+    }
+
+    /**
+     * Расширяет палиндром от заданного центра и возвращает его длину
+     */
+    private int expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+
+        // длина палиндрома после выхода из цикла
+        return right - left - 1;
+    }
+
+    /// ________________________///
+    //Не каноничное кривое решение с идеей что палиндром требует парных букв. И возможно не корректное. Но тесты литкод проходит.
     public String longestPalindrome(String s) {
 
         //        Set<Character> charactersThatIsThereMoreThenOnce = findCharactersTatInLineMoreThenOnce(s);

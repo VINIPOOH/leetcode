@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class LongestConsecutiveSequence128 {
+
     public int longestConsecutive(int[] nums) {
         int length = nums.length;
         if (nums.length == 0) {
@@ -74,19 +75,19 @@ public class LongestConsecutiveSequence128 {
     public int longestConsecutiveUnionFind(int[] nums) {
         if (nums.length == 0) return 0;
 
-        Map<Integer, Integer> map = new HashMap<>(); // число → индекс в UF
+        Map<Integer, Integer> map = new HashMap<>(); // число → индекс в UF (мапинг узел на индекс)
         UnionFind uf = new UnionFind(nums.length);
 
         for (int i = 0; i < nums.length; i++) {
             int num = nums[i];
             if (map.containsKey(num)) continue; // пропускаем дубликаты
-            map.put(num, i);
+            map.put(num, i); //индексом берем просто индекс в изначальном списке.
 
             // объединяем с соседями
-            if (map.containsKey(num - 1)) {
+            if (map.containsKey(num - 1)) { //если есть элемент +1
                 uf.union(i, map.get(num - 1));
             }
-            if (map.containsKey(num + 1)) {
+            if (map.containsKey(num + 1)) {//если есть элемент -1
                 uf.union(i, map.get(num + 1));
             }
         }

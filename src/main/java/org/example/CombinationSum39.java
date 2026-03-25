@@ -12,7 +12,7 @@ public class CombinationSum39 {
 
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> currentPath = new ArrayList<>();
-        dfs(candidates, target, 0, currentPath, result);
+        dfs1(candidates, target, 0, currentPath, result);
         return result;
     }
 
@@ -58,20 +58,24 @@ public class CombinationSum39 {
         } else {
             int currentCandidate = candidates[start];
             currentPath.add(currentCandidate);
+            int newTarget = target - currentCandidate;
+            if (newTarget >= 0)
             // ветка с текущим элементом, элемент берем потому таргет меняем с учетом взятого елемента
-            dfs(candidates, target - currentCandidate, start, currentPath, result);
+            {
+                dfs1(candidates, newTarget, start, currentPath, result);
+            }
             currentPath.removeLast();
 
             //запуск ветки без текущего кандидата, потому таргет не меняем и берем следующего кандидата
-            dfs(candidates, target, start + 1, currentPath, result);
+            dfs1(candidates, target, start + 1, currentPath, result);
         }
     }
 
     //со стеком итеративный
     private static void dfs2(int[] candidates,
-                            int target,
-                            int start,
-                            List<List<Integer>> result) {
+                             int target,
+                             int start,
+                             List<List<Integer>> result) {
 
         ArrayDeque<Integer> stack = new ArrayDeque<>();
         int currentStart = start;
@@ -94,9 +98,13 @@ public class CombinationSum39 {
             }
 
             //пока все не перебрано на этом этапе у нас всегда есть хоть 1 элемент
-            if (stack.isEmpty()) break; // закончились все варианты
+            if (stack.isEmpty()) {
+                break; // закончились все варианты
+            }
 
             // Откат: убираем последний элемент пути
+            //на первый взгляд кажется что 1 выхода не достаточно. Но глубокий выход достигается тем что во внутреннем Вайле не добавляются новые элементы
+            //и происходит второй выход.
             int lastIndex = stack.pop();
             remaining += candidates[lastIndex]; // откатываем target
             currentStart = lastIndex + 1;       // переходим к следующему кандидату
