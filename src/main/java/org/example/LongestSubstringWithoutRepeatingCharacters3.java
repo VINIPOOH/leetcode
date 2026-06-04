@@ -9,6 +9,7 @@ public class LongestSubstringWithoutRepeatingCharacters3 {
     //Канонический вариант. По заявлениям ИИ могут быть задачи где невозможна моя оптимизация обновлять только на событии перехода к новому окну.
     //Пример он так родить и не смог
     public int lengthOfLongestSubstringCanonical(String s) {
+        //Индекс где последний раз встретился символ. Мы не чистим мапу никогда. Мы каждый раз когда видим повтор двигаем лефт если повтор внутри текущего окна.
         HashMap<Character, Integer> characterToLastIndexMap = new HashMap<>();
 
         int left = 0;

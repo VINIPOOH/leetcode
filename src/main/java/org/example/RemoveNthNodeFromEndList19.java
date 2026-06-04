@@ -20,17 +20,27 @@ public class RemoveNthNodeFromEndList19 {
     }
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode firstDummy = new ListNode(1, head);
-        ListNode pointerBeforPotentialNodeToremoov = firstDummy;
-        ListNode currentPointer = head;
-        for (int i = 1; i < n; i++) {
-            currentPointer = currentPointer.next;
+        // Добавляем фиктивный узел, чтобы упростить удаление головы
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+
+        // Сначала сдвигаем fast на n+1 шагов вперед
+        for (int i = 0; i <= n; i++) {
+            fast = fast.next;
         }
-        while (currentPointer.next != null) {
-            currentPointer = currentPointer.next;
-            pointerBeforPotentialNodeToremoov = pointerBeforPotentialNodeToremoov.next;
+
+        // Теперь двигаем оба указателя до конца списка
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
         }
-        pointerBeforPotentialNodeToremoov.next = pointerBeforPotentialNodeToremoov.next.next;
-        return firstDummy.next;
+
+        // slow.next → узел, который нужно удалить
+        slow.next = slow.next.next;
+
+        return dummy.next; // новый head списка
     }
 }

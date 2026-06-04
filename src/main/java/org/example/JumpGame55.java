@@ -4,7 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JumpGame55 {
+
+    //каноническое жадное решение
+    //проверяем каждый элемент. Если индекс вышел за достижимый индекс не можем
+    //иначе обновляем достижимый максимум
     public boolean canJump(int[] nums) {
+        int maxReachavleIndex = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > maxReachavleIndex) {
+                return false;        // не можем дойти сюда
+            }
+            maxReachavleIndex = Math.max(maxReachavleIndex, i + nums[i]);
+        }
+        return true;
+    }
+
+    //задом наперед жадное решение.
+    public boolean canJumpGreedyBackward(int[] nums) {
         int currentAchievementPoint = nums.length - 1;
         for (int i = nums.length - 2; i >= 0; i--) {
             if (nums[i] >= currentAchievementPoint - i) {
@@ -14,20 +30,11 @@ public class JumpGame55 {
         return currentAchievementPoint == 0;
     }
 
-
-    //движемся с начала, менее интуитивный алгоритм. По сути BFS поиск в ширину
-    public boolean canJumpFromStart(int[] nums) {
-        int farthestAchivableIndex = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (i > farthestAchivableIndex) {
-                return false; // застряли
-            }
-            farthestAchivableIndex = Math.max(farthestAchivableIndex, i + nums[i]);
-        }
-        return true;
-    }
-
+    //___________________________________________________________
+    //Альтернативные задачи
+    //нужно посчитать минимальное количество прыжков
     //минимальное количество прыжков если конец может быть не достижим
+    //BFS поиск в ширину.
     public int jumpUniversal(int[] nums) {
         int jumps = 0;
         int currentEnd = 0;
@@ -40,7 +47,9 @@ public class JumpGame55 {
             //в рамках нашего поиска в ширину BFS
             if (i == currentEnd) {
                 jumps++;//увеличиваем счетчик уровня (количество прыжков
-                if (farthestAchivableIndex <= i) return -1; // если конец не достижим
+                if (farthestAchivableIndex <= i) {
+                    return -1; // если конец не достижим
+                }
                 //обновляем край текущего уровня (дистанция покрыта текущим прыжком)
                 currentEnd = farthestAchivableIndex;
             }
@@ -49,24 +58,8 @@ public class JumpGame55 {
         return jumps;
     }
 
-    //минимальное количество прыжков
-    public int jump(int[] nums) {
-        int jumps = 0;
-        int currentEnd = 0;
-        int farthestAchivableIndex = 0;
-
-        for (int i = 0; i < nums.length - 1; i++) {
-            farthestAchivableIndex = Math.max(farthestAchivableIndex, i + nums[i]);
-
-            if (i == currentEnd) {
-                jumps++;
-                currentEnd = farthestAchivableIndex;
-            }
-        }
-
-        return jumps;
-    }
-
+    //___________________________________________________________
+    //Альтернативные задачи
     //минимальный путь прыжков
     public List<Integer> jumpRoute(int[] nums) {
         List<Integer> route = new ArrayList<>();

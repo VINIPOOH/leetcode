@@ -36,14 +36,17 @@ public class MaximumSubarray53 {
         res.leftSum = Math.max(left.leftSum, left.totalSum + right.leftSum);
         res.rightSum = Math.max(right.rightSum, right.totalSum + left.rightSum);
         //Лучший локальный максимум или слева или с права, или посередине.
+
         res.maxSum = Math.max(
                 Math.max(left.maxSum, right.maxSum),
                 left.rightSum + right.leftSum
+//                Math.max(left.rightSum + right.leftSum, left.totalSum + right.totalSum)
+                //totalSum явно не проверяем потому что он уже включен res.leftSum res.rightSum
         );
         return res;
     }
 
-    //Kadane Solution
+    //Kadane Solution жадный
     public int maxSubArrayKadane(int[] nums) {
         // Инициализация: первый элемент массива
         int maxSoFar = nums[0];   // глобальный максимум

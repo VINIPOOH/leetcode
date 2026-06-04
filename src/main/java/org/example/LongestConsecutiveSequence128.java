@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 public class LongestConsecutiveSequence128 {
 
@@ -12,7 +14,7 @@ public class LongestConsecutiveSequence128 {
         if (nums.length == 0) {
             return 0;
         }
-        HashSet<Integer> hashSet = new HashSet<>(length);
+        Set<Integer> hashSet = new HashSet<>(length);
         for (int num : nums) {
             hashSet.add(num);
         }
@@ -36,6 +38,34 @@ public class LongestConsecutiveSequence128 {
             currentSequence = 1;
         }
         return maxSequence;
+    }
+
+    //Вариант с проверкой только от минимумов последовательностей
+    public int longestConsecutiveFromMin(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        int maxLength = 0;
+
+        for (int num : set) {
+            if (!set.contains(num - 1)) { // начало последовательности
+
+                int current = num;
+                int length = 1;
+
+                while (set.contains(current + 1)) {
+                    current++;
+                    length++;
+                }
+
+                maxLength = Math.max(maxLength, length);
+            }
+        }
+
+        return maxLength;
     }
 
     class UnionFind {
@@ -84,10 +114,10 @@ public class LongestConsecutiveSequence128 {
             map.put(num, i); //индексом берем просто индекс в изначальном списке.
 
             // объединяем с соседями
-            if (map.containsKey(num - 1)) { //если есть элемент +1
+            if (map.containsKey(num - 1)) { //если есть элемент -1
                 uf.union(i, map.get(num - 1));
             }
-            if (map.containsKey(num + 1)) {//если есть элемент -1
+            if (map.containsKey(num + 1)) {//если есть элемент +1
                 uf.union(i, map.get(num + 1));
             }
         }
