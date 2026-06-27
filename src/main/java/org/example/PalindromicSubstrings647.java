@@ -44,7 +44,7 @@ public class PalindromicSubstrings647 {
                 currentProcessIndex++;
             }
             if (countForSameLater > 1) {
-                countToReturn += (countForSameLater * (countForSameLater - 1)) / 2;
+                countToReturn += (countForSameLater * (countForSameLater - 1)) / 2;//Арифметическая прогрессия. Количество под отрезков последовательности
             }
             //мы не заботимся о центре между букв поскольку палиндром с центром между букв всегда имеет дви и более одинаковые буквы в центре которые покрыты
             //внутренним циклом вайл выше.

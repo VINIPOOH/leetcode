@@ -20,6 +20,7 @@ public class LongestPalindromicSubstring5 {
             return s;
         }
 
+        //Индекс начала текущего лучшего палиндрома
         int startOfBest = 0;
         int maxLength = 1;
 
@@ -29,7 +30,7 @@ public class LongestPalindromicSubstring5 {
             int oddLength = expandAroundCenter(s, center, center);
             if (oddLength > maxLength) {
                 maxLength = oddLength;
-                startOfBest = center - (oddLength - 1) / 2;
+                startOfBest = center - (oddLength - 1) / 2; //отнимание единицы можно убрать потому что джава дробь отбросит при приведении к инт.
             }
 
             // 2) Проверяем палиндром чётной длины (центр между символами)

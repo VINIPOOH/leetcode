@@ -1,4 +1,4 @@
-package org.example;
+package org.example.desine;
 
 public class ImplementTrie208 {
 }

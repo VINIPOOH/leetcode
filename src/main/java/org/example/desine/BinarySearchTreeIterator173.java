@@ -1,12 +1,9 @@
-package org.example;
+package org.example.desine;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Set;
 
 public class BinarySearchTreeIterator173 {
     public class TreeNode {
@@ -59,7 +56,8 @@ public class BinarySearchTreeIterator173 {
     }
 
 
-    //Простой но о от н по памяти.
+    //Простой но о от н по памяти. Но на практике самый быстрый потом в тестах.
+    //все дерево тупо переводим с лист с лева на право
     static class BSTIteratorArray {
 
         private List<Integer> inorder = new ArrayList<>();

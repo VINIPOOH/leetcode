@@ -17,20 +17,44 @@ public class WordBreak139 {
     }
 
     //каноническое решение
-    public boolean wordBreakDP(String s, List<String> wordDict) {
+    public boolean wordBreak(String text, List<String> dictionary) {
+        Set<String> wordSet = new HashSet<>(dictionary);
+
+        final int textLength = text.length();
+
+        boolean[] dp = new boolean[textLength + 1];
+        dp[0] = true;
+
+        for (int endPosition = 1; endPosition <= textLength; endPosition++) {
+            for (int startPosition = 0; startPosition < endPosition; startPosition++) {
+                if (!dp[startPosition]) {
+                    continue;
+                }
+                String candidateWord = text.substring(startPosition, endPosition);
+                if (wordSet.contains(candidateWord)) {
+                    dp[endPosition] = true;
+                    break;
+                }
+            }
+        }
+        return dp[textLength];
+    }
+
+
+    public boolean wordBreakDPOptimized(String s, List<String> wordDict) {
         // Переводим список слов в HashSet для быстрого поиска
         Set<String> dict = new HashSet<>(wordDict);
 
         // Находим максимальную длину слова в словаре
         int maxLen = getMaxLen(wordDict);
 
-        int n = s.length();
+        final int length = s.length();
         // dp[i] = true, если s[0..i) можно разбить на слова из словаря
-        boolean[] dp = new boolean[n + 1];
+        boolean[] dp = new boolean[length + 1];
         dp[0] = true; // пустая строка всегда "разбиваемая"
 
-        // Идем по всем позициям в строке s (от 1 до n)
-        for (int i = 1; i <= n; i++) {
+        // Идем по всем позициям в строке s (от 1 до length)
+        for (int i = 1; i <= length; i++) {
             // Проверяем только последние maxLen символов (оптимизация)
             for (int len = 1; len <= maxLen && len <= i; len++) {
                 // Если подстроку s[0..i-len) можно разбить
@@ -46,8 +70,8 @@ public class WordBreak139 {
             }
         }//этот цикл можно было бы крутить и по словам из словаря, но это будет быстрее только при очень маленьком словаре с длинными словами.
 
-        // dp[n] = можно ли разбить всю строку s
-        return dp[n];
+        // dp[length] = можно ли разбить всю строку s
+        return dp[length];
     }
 
     private static int getMaxLen(List<String> wordDict) {
@@ -101,7 +125,7 @@ public class WordBreak139 {
         boolean isWord;
     }
 
-    public boolean wordBreak(String s, List<String> wordDict) {
+    public boolean wordBreakTrie(String s, List<String> wordDict) {
         TrieNode root = buildTrie(wordDict);
 
         int n = s.length();
@@ -153,7 +177,6 @@ public class WordBreak139 {
 /// ______________________________________________________///
     //мое первое решение
     /*
-    Вот тебе чистый краткий конспект, без лишней воды — можно сохранять:
 
     📌 Word Break — моё решение (DFS + memo)
     1️⃣ Идея алгоритма

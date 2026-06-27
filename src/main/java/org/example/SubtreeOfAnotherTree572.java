@@ -21,17 +21,19 @@ public class SubtreeOfAnotherTree572 {
         }
     }
 
+    //тут мы ищем ноды для старта проверки
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if (root == null) {
             return false;
         }
-        if (root.val == subRoot.val && isContainingSubTree(root, subRoot)) {
+        if (root.val == subRoot.val && areIdentical(root, subRoot)) {
             return true;
         }
         return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
 
-    private boolean isContainingSubTree(TreeNode root, TreeNode subRoot) {
+    //тут мы проверяем что вырастает ли из заданной ноды нужное дерево
+    private boolean areIdentical(TreeNode root, TreeNode subRoot) {
         if (root== null && subRoot == null){
             return true;
         }
@@ -42,6 +44,6 @@ public class SubtreeOfAnotherTree572 {
         if (root.val != subRoot.val){
             return false;
         }
-        return isContainingSubTree(root.left, subRoot.left) && isContainingSubTree(root.right, subRoot.right);
+        return areIdentical(root.left, subRoot.left) && areIdentical(root.right, subRoot.right);
     }
 }

@@ -10,13 +10,14 @@ public class RotateImage48 {
     //Layer-by-layer cyclic rotation (4-cycle in-place rotation) поворот на 90 граусов по часовой стрелке
     // для поворота в другую сторону формула будет newRow = n - 1 - col, newCol = row верно?
     public void rotate90(int[][] matrix) {
-        for (int col = 0; col < matrix.length / 2; col++) {
-            int rov = col;
+
+        for (int layer = 0; layer < matrix.length / 2; layer++) {
+            int positionInLayer = layer; //ров строка
+            int indexToStop = matrix.length - 1 - layer;
             // нужно отнять 1 потому что последний элемент строки повернут в процессе вращения первого
-            int indexToStop = matrix.length - 1;
-            for (; rov < (indexToStop - col); rov++) {
-                int currentRov = rov;
-                int currentCol = col;
+            for (; positionInLayer < indexToStop; positionInLayer++) {
+                int currentRov = positionInLayer;
+                int currentCol = layer;
                 int insertCol = matrix.length - 1 - currentRov;
                 int toIncert = matrix[currentRov][currentCol];
                 int toSave;

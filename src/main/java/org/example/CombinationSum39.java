@@ -37,7 +37,7 @@ public class CombinationSum39 {
                 int newTarget = target - currentCandidate;
                 // i, НЕ i+1 — если элемент можно использовать повторно
                 dfs(candidates, newTarget, i, currentPath, result);
-                //удаляем текущий элемент с пути поскольку с ним проверка закончена и дальше мы будем проверять новый текущий елемент в цыкле
+                //удаляем текущий элемент с пути поскольку с ним проверка закончена и дальше мы будем проверять новый текущий элемент в цикле
                 currentPath.removeLast();
             }
         }
@@ -57,13 +57,12 @@ public class CombinationSum39 {
             return; //unnecessary but for clarity step. condition out of recursion
         } else {
             int currentCandidate = candidates[start];
-            currentPath.add(currentCandidate);
             int newTarget = target - currentCandidate;
-            if (newTarget >= 0)
-            // ветка с текущим элементом, элемент берем потому таргет меняем с учетом взятого елемента
-            {
-                dfs1(candidates, newTarget, start, currentPath, result);
+            if (newTarget < 0) { //ранний  выход по отсортированному массиву с обоих веток. дальше элементы точно слишком большие
+                return;
             }
+            currentPath.add(currentCandidate);
+            dfs1(candidates, newTarget, start, currentPath, result);
             currentPath.removeLast();
 
             //запуск ветки без текущего кандидата, потому таргет не меняем и берем следующего кандидата

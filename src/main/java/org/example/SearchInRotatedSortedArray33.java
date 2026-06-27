@@ -12,7 +12,7 @@ public class SearchInRotatedSortedArray33 {
 
             // Левая половина отсортирована
             if (nums[left] <= nums[mid]) {
-                if (target >= nums[left] && target < nums[mid]) {
+                if (target >= nums[left] && target < nums[mid]) {// есть ли в отсортированной половине
                     right = mid - 1; // таргет слева
                 } else {
                     left = mid + 1;  // таргет справа
@@ -20,7 +20,7 @@ public class SearchInRotatedSortedArray33 {
             }
             // Правая половина отсортирована
             else {
-                if (target > nums[mid] && target <= nums[right]) {
+                if (target > nums[mid] && target <= nums[right]) {// есть ли в отсортированной половине
                     left = mid + 1;  // таргет справа
                 } else {
                     right = mid - 1; // таргет слева
